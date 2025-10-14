@@ -1,0 +1,16 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	ns1.labs.itmo.loc. admin.labs.itmo.loc. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	ns1.labs.itmo.loc.
+ns1	IN	A	192.168.0.101
+k8s	IN	A	192.168.0.101
+mlflow  IN      A       192.168.0.108
+*.k8s   IN      A       192.168.0.101
