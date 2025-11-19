@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: wine-classifier-api
+  cache.type: redis
+  data.redis:
+    port: 6379
+  ai:
+    vectorstore:
+      qdrant:
+        port: 6334
+        use-tls: false
+        initialize-schema: true
+        collection-name: spring
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, refresh
+
+server:
+  port: 8080
+
+huggingface:
+  token: ${HF_TOKEN}
+  rosberta.url: https://router.huggingface.co/hf-inference/models/ai-forever/ru-en-RoSBERTa/pipeline/feature-extraction
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  data.redis:
+    host: localhost
+  ai:
+    vectorstore:
+      qdrant:
+        host: localhost
+
+server:
+  port: ${APP_PORT}
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  data.redis:
+    host: redis
+  ai:
+    vectorstore:
+      qdrant:
+        host: qdrant
+
