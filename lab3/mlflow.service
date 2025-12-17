@@ -1,0 +1,20 @@
+[Unit]
+Description=MLflow Tracking Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/home/vboxuser/Documents/labs-na-and-ct/lab3/mlflow-data
+Environment="PATH=/home/vboxuser/Documents/labs-na-and-ct/lab3/mlflow-server/venv/bin"
+ExecStart=/home/vboxuser/Documents/labs-na-and-ct/lab3/mlflow-server/venv/bin/mlflow server \
+    --backend-store-uri sqlite:///mlflow.db \
+    --default-artifact-root file:///home/vboxuser/Documents/labs-na-and-ct/lab3/mlflow-data/artifacts \
+    --host 0.0.0.0 \
+    --port 443 \
+    --gunicorn-opts "--certfile=/etc/ssl/mlflow/mlflow.labs.itmo.loc.crt --keyfile=/etc/ssl/mlflow/mlflow.labs.itmo.loc.key"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
